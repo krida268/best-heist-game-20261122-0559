@@ -4,7 +4,7 @@
 // vendor/makefun-game.ts (salinan kit yang tidak diubah).
 // Node 22, stdlib saja. Di luar grader, MAKEFUN_OUTPUT_DIR menggantikan /output.
 
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
@@ -38,9 +38,14 @@ function main(): void {
   mustExist(gameSrc, 'game/');
   mustExist(shotsSrc, 'screenshots/');
 
-  // Mulai dari keluaran bersih supaya tidak ada sisa run sebelumnya.
-  rmSync(out, { recursive: true, force: true });
+  // Kosongkan isi keluaran tanpa menghapus direktorinya sendiri:
+  // di grader, direktori keluaran adalah mount point yang tidak boleh
+  // dihapus oleh pengguna tanpa hak — menghapus isinya saja sudah cukup
+  // supaya tidak ada sisa run sebelumnya.
   mkdirSync(out, { recursive: true });
+  for (const child of readdirSync(out)) {
+    rmSync(join(out, child), { recursive: true, force: true });
+  }
 
   // Salin apa adanya: game/ lalu screenshots/.
   cpSync(gameSrc, join(out, 'game'), { recursive: true });
