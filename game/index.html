@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Pencuri Senja — Heist di Galeri Malam</title>
+<style>
+  /* Seluruh tampilan digambar prosedural di canvas; CSS hanya membingkainya. */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #0b0e1a;
+    overflow: hidden;
+    font-family: "Segoe UI", system-ui, sans-serif;
+  }
+  #stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  canvas {
+    display: block;
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    background: #10142a;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+    cursor: crosshair;
+  }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="game" width="1280" height="720"></canvas></div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
